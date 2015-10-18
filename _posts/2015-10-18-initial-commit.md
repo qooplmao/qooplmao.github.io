@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Initial Commit
+comments: false
 ---
 
 It starts.

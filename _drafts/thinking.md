@@ -1,0 +1,6 @@
+---
+layout: post
+title: Thinking....
+---
+
+I'm sure something will come to me...
