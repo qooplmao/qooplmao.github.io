@@ -1,0 +1,27 @@
+# Dependencies
+markdown:           redcarpet
+highlighter:        pygments
+
+# Permalinks
+permalink:          pretty
+relative_permalinks: true
+
+# Setup
+title:              michael fitzpatrick
+tagline:            'A guy with a blog'
+description:        '32 year old full-stack PHP kind of guy'
+url:                http://michaelfitzpatrick.co.uk
+baseurl:            /
+
+paginate:           10
+
+author:
+    name:           Michael Fitzpatrick
+    email:          fitz@michaelfitzpatrick.co.uk
+
+# Custom vars
+links:
+    github:         https://github.com/qooplmao
+    stack-overflow: http://stackoverflow.com/users/1791606/qooplmao
+    linkedin:       http://uk.linkedin.com/in/qooplmao
+
