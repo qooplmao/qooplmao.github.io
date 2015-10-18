@@ -2,6 +2,7 @@
 layout: post
 title: Initial Commit
 comments: false
+tags: [ ]
 ---
 
 It starts.
