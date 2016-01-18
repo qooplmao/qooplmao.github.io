@@ -27,11 +27,11 @@ Now imagine this process:
 | COMMAND                  | EVENT                                          |
 | :----------------------- | :--------------------------------------------- |
 | JoinGym (customer Jim)   | MemberJoinedGym (Jim)                          |
-| Join Gym (customer Bob)  | MemberJoinedGym (Bob)                          |
-| JoinGum (customer Jim)   | *No event created as Jim is already a member*  |
+| JoinGym (customer Bob)   | MemberJoinedGym (Bob)                          |
+| JoinGym (customer Jim)   | *No event created as Jim is already a member*  |
 | EnterGym (customer Jim)  | MemberEnteredGym (Jim)                         |
-| Enter Gym (customer Bob) | MemberEnteredGym (Bob)                         |
-| Leave Gym (customer Jim) | MemberLeftGym (Jim)                            |
+| EnterGym (customer Bob)  | MemberEnteredGym (Bob)                         |
+| LeaveGym (customer Jim)  | MemberLeftGym (Jim)                            |
 | QuitGym (customer Jim)   | MemberQuitGym (Jim)                            |
 | QuitGym (customer Jim)   | *No event created as Jim already quit*         |
 | LeaveGym (customer Bob)  | MemberLeftGym (Bob)                            |
@@ -51,16 +51,16 @@ All this is handled on the write side and events are stored to a table like(-ish
 
 **The Read Side (Read Models by pulling events)**
 
-Then on the read side we create an object that runs through all of the relevant
-events for the read model and works out whatever it wants to. This can be done
-as the events are created (synchronously) or after the fact (asynchronously).
+Then on the read side we create a, generally, single use object that runs through all 
+of the events, listening for any that are relevant, and works out whatever it is required to.
+This can be done as the events are created (synchronously) or after the fact (asynchronously).
 
 From the events that we have there (*MemberJoinedGym*, *MemberEnteredGym*, *MemberLeftGym* &
 *MemberQuitGym*) we can create a whole load of read models that do completely different
 things.  
 For example:
 
-- A list (or the number) of all current members
+- A list (or the number) of all current members [^1]
 - A list (or the number) of a members that joined in a certain period
 - A list (or the number) of members that have quit
 - A list (or the number) of members that quit within a month of joining up
@@ -71,3 +71,5 @@ but the main benefit is that with the events being stored there isn't the necess
 think of all of them at this point. One day in the future we may want to create a report
 that gives us the numbers of members that regularly come on a Sunday so that you could
 decide whether or not to extend the opening hours. 
+
+[^1]: Read model would listen to `MemberJoinedGym` and `MemberQuitGym`. Each time a member joined they would be added to the list and then removed when they quite.
