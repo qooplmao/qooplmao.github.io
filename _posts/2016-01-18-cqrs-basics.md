@@ -1,7 +1,7 @@
 ---
 layout: post
 title: CQRS Basics
-comments: false
+comments: true
 tags: [ cqrs ]
 ---
 
