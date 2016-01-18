@@ -13,6 +13,8 @@ be destroyed and rebuilt to give exactly the same read data.
 
 Image the situation where we have a gym.
 
+**The Write Side (Commands and creating events)**
+
 We have commands like:
 
 - JoinGym
@@ -22,29 +24,22 @@ We have commands like:
 
 Now imagine this process:
 
-- **Command**: JoinGym (customer Jim)
-    - **Event**: MemberJoinedGym (Jim)
-- **Command**: Join Gym (customer Bob)
-    - **Event**: MemberJoinedGym (Bob)
-- **Command**: JoinGum (customer Jim)
-    - No event created as Jim is already a member
-- **Command**: EnterGym (customer Jim)
-    - **Event**: MemberEnteredGym (Jim)
-- **Command**: Enter Gym (customer Bob)
-    - **Event**: MemberEnteredGym (Bob)
-- **Command**: Leave Gym (customer Jim)
-    - **Event**: MemberLeftGym (Jim)
-- **Command**: QuitGym (customer Jim)
-    - **Event**: MemberQuitGym (Jim)
-- **Command**: QuitGym (customer Jim)
-    - No event created as Jim already quit
-- **Command**: LeaveGym (customer Bob)
-    - **Event**:MemberLeftGym (Bob)
+| COMMAND                  | EVENT                                          |
+| :----------------------- | :--------------------------------------------- |
+| JoinGym (customer Jim)   | MemberJoinedGym (Jim)                          |
+| Join Gym (customer Bob)  | MemberJoinedGym (Bob)                          |
+| JoinGum (customer Jim)   | *No event created as Jim is already a member*  |
+| EnterGym (customer Jim)  | MemberEnteredGym (Jim)                         |
+| Enter Gym (customer Bob) | MemberEnteredGym (Bob)                         |
+| Leave Gym (customer Jim) | MemberLeftGym (Jim)                            |
+| QuitGym (customer Jim)   | MemberQuitGym (Jim)                            |
+| QuitGym (customer Jim)   | *No event created as Jim already quit*         |
+| LeaveGym (customer Bob)  | MemberLeftGym (Bob)                            |
 
-All this is handled on the write side and events are stored to a table like:
+All this is handled on the write side and events are stored to a table like(-ish):
 
 | ID  | DATETIME               | SERIALIZED EVENT (a super basic version)    |
-| --- | ---------------------- | ------------------------------------------- |
+| :-- | :--------------------- | :------------------------------------------ |
 | 1   | 2015-01-01 10:00:00    | {"MemberJoinedGym":{"Customer":"Jim"}}      |
 | 2   | 2015-01-02 12:00:00    | {"MemberJoinedGym":{"Customer":"Bob"}}      |
 | 3   | 2015-01-03 10:00:00    | {"MemberEnteredGym":{"Customer":"Jim"}}     |
@@ -52,6 +47,9 @@ All this is handled on the write side and events are stored to a table like:
 | 5   | 2015-01-02 12:00:00    | {"MemberLeftGym":{"Customer":"Jim"}}        |
 | 6   | 2015-01-02 12:15:00    | {"MemberQuitGym":{"Customer":"Jim"}}        |
 | 7   | 2015-01-02 13:00:00    | {"MemberLeftGym":{"Customer":"Bob"}}        |
+
+
+**The Read Side (Read Models by pulling events)**
 
 Then on the read side we create an object that runs through all of the relevant
 events for the read model and works out whatever it wants to. This can be done
