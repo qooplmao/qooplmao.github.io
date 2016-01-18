@@ -72,4 +72,4 @@ think of all of them at this point. One day in the future we may want to create 
 that gives us the numbers of members that regularly come on a Sunday so that you could
 decide whether or not to extend the opening hours. 
 
-[^1]: Read model would listen to `MemberJoinedGym` and `MemberQuitGym`. Each time a member joined they would be added to the list and then removed when they quite.
+[^1]: Read model would listen to `MemberJoinedGym` and `MemberQuitGym`. Each time a member joined they would be added to the list and then removed when they quit.
